@@ -7,51 +7,43 @@ const listLetters = [ 'a', 'b', 'c', 'd', 'e', 'f', 'g',
 's', 't', 'u', 'v', 'w', 'x', 'y', 'z' ];
 
 btnEncrypt.addEventListener('click', () => {
-    const textarea = document.querySelector('#text');
-    const keyValue = Number(key.value);
-    let newText = '';
+  const textarea = document.querySelector('#text');
+  const keyValue = Number(key.value);
+  let newText = '';
 
-    for (const letter of textarea.value) {
-        if (!listLetters.includes(letter)) {
-            continue;
-        }
-
-        const indexLetter = listLetters.findIndex((item) => item === letter);
-        let indexNewLetter = indexLetter + keyValue;
-
-        if (indexNewLetter > 25) {
-            indexNewLetter -= 26;
-        }
-
-        newText += listLetters[indexNewLetter];
+  for (const letter of textarea.value) {
+    if (!listLetters.includes(letter)) {
+      continue;
     }
 
-    textarea.value = newText;
+    const indexLetter = listLetters.findIndex((item) => item === letter);
+    let newIndex = (indexLetter + keyValue) % listLetters.length;
+    
+    newText += listLetters[newIndex];
+  }
+
+  textarea.value = newText;
 });
 
 btnDecrypt.addEventListener('click', () => {
-    const textarea = document.querySelector('#text');
-    const keyValue = Number(key.value);
-    let newText = '';
+  const textarea = document.querySelector('#text');
+  const keyValue = Number(key.value);
+  let newText = '';
 
-    for (const letter of textarea.value) {
-        if (!listLetters.includes(letter)) {
-            continue;
-        }
-
-        const indexLetter = listLetters.findIndex((item) => item === letter);
-        let indexNewLetter = indexLetter - keyValue;
-
-        if (indexNewLetter < 0) {
-            indexNewLetter += 26;
-        }
-
-        newText += listLetters[indexNewLetter];
+  for (const letter of textarea.value) {
+    if (!listLetters.includes(letter)) {
+      continue;
     }
 
-    textarea.value = newText;
+    const indexLetter = listLetters.findIndex((item) => item === letter);
+    let newIndex = (indexLetter - keyValue) % listLetters.length;
+
+    if (newIndex < 0) {
+      newIndex += listLetters.length;
+    }
+
+    newText += listLetters[newIndex];
+  }
+
+  textarea.value = newText;
 });
-
-
-
-
